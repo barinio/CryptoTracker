@@ -1,19 +1,25 @@
 import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
-  headerContainer: {
+  priceContainer: {
+    padding: 15,
     flexDirection: "row",
-    paddingHorizontal: 10,
-    alignItems: "center",
     justifyContent: "space-between",
+    alignItems: "center",
   },
-  tickerContainer: { flexDirection: "row", alignItems: "center" },
-  tickerTitle: { color: "white", fontWeight: "bold", fontSize: 17 },
-  rankContainer: {
-    backgroundColor: "#585858",
-    paddingHorizontal: 5,
-    paddingVertical: 2,
+  name: { color: "white", fontSize: 15 },
+  currentPrice: {
+    color: "white",
+    fontSize: 30,
+    fontWeight: "600",
+    letterSpacing: 1,
+  },
+  priceChange: { color: "white", fontSize: 17, fontWeight: "500" },
+  priceChangeContainer: {
+    paddingHorizontal: 3,
+    paddingVertical: 8,
     borderRadius: 5,
+    flexDirection: "row",
   },
 });
 

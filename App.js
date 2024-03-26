@@ -1,15 +1,25 @@
+import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
-// import HomeScreen from "./src/screens/HomeScreen/HomeScreen";
-import CoinDetailedScreen from "./src/screens/CoinDetailedScreen/CoinDetailedScreen";
+import Navigation from "./src/navigation/Navigation";
+import WatchListProvider from "./src/Context/WatchListContext";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <CoinDetailedScreen />
-      {/* <HomeScreen /> */}
-      <StatusBar style="light" />
-    </View>
+    <NavigationContainer
+      theme={{
+        colors: {
+          background: "#121212",
+        },
+      }}
+    >
+      <WatchListProvider>
+        <View style={styles.container}>
+          <Navigation />
+          <StatusBar style="light" />
+        </View>
+      </WatchListProvider>
+    </NavigationContainer>
   );
 }
 
