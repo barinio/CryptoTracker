@@ -21,6 +21,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flexDirection: "row",
   },
+
+  input: {
+    flex: 1,
+    height: 40,
+    margin: 12,
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
+    padding: 10,
+    color: "white",
+    fontSize: 16,
+  },
 });
 
 export default styles;

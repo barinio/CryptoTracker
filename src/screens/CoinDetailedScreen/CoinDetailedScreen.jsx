@@ -1,4 +1,4 @@
-import { ActivityIndicator, Text, View } from "react-native";
+import { ActivityIndicator, Text, TextInput, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 import CoinDetailedHeader from "./components/CoinDetailedHeader/CoinDetailedHeader";
@@ -10,15 +10,13 @@ import { useEffect, useState } from "react";
 const CoinDetailedScreen = () => {
   const [coin, setCoin] = useState(null);
   const [coinMarketData, setCoinMarketData] = useState(null);
+
+  const { params } = useRoute();
+  const { coinId } = params;
+
   const [loading, setLoading] = useState(false);
-
-  const percentageColor =
-    price_change_percentage_24h < 0 ? "#ea3943" : "#16c784";
-
-  const route = useRoute();
-  const {
-    params: { coinId },
-  } = route;
+  const [coinValue, setCoinValue] = useState("1");
+  const [usdValue, setUsdValue] = useState("");
 
   const fetchCoinData = async () => {
     setLoading(true);
@@ -49,6 +47,28 @@ const CoinDetailedScreen = () => {
     },
   } = coin;
 
+  const percentageColor =
+    price_change_percentage_24h < 0 ? "#ea3943" : "#16c784" || "white";
+
+  // const formatCurrency = (value) => {
+  //   "worklet";
+  //   if (value === "") {
+  //     return `$${current_price.usd.toFixed(2)}`;
+  //   }
+  //   return `$${parseFloat(value).toFixed(2)}`;
+  // };
+
+  const changeCoinValue = (value) => {
+    setCoinValue(value);
+    const floatValue = parseFloat(value.replace(",", ".")) || 0;
+    setUsdValue((floatValue * current_price.usd).toString());
+  };
+  const changeUsdValue = (value) => {
+    setUsdValue(value);
+    const floatValue = parseFloat(value.replace(",", ".")) || 0;
+    setCoinValue((floatValue / current_price.usd).toString());
+  };
+
   return (
     <View>
       <CoinDetailedHeader
@@ -75,8 +95,30 @@ const CoinDetailedScreen = () => {
             style={{ alignSelf: "center", marginRight: 5 }}
           />
           <Text style={styles.priceChange}>
-            {price_change_percentage_24h.toFixed(2)}%
+            {price_change_percentage_24h?.toFixed(2)}%
           </Text>
+        </View>
+      </View>
+      <View style={{ flexDirection: "row" }}>
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <Text style={{ color: "white", alignSelf: "center" }}>
+            {symbol.toUpperCase()}
+          </Text>
+          <TextInput
+            style={styles.input}
+            value={coinValue}
+            keyboardType="numeric"
+            onChangeText={changeCoinValue}
+          />
+        </View>
+        <View style={{ flex: 1, flexDirection: "row" }}>
+          <Text style={{ color: "white", alignSelf: "center" }}>USD</Text>
+          <TextInput
+            style={styles.input}
+            value={usdValue}
+            keyboardType="numeric"
+            onChangeText={changeUsdValue}
+          />
         </View>
       </View>
     </View>

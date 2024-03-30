@@ -4,6 +4,8 @@ import { StyleSheet, View } from "react-native";
 import Navigation from "./src/navigation/Navigation";
 import WatchListProvider from "./src/Context/WatchListContext";
 
+import { RecoilRoot } from "recoil";
+
 export default function App() {
   return (
     <NavigationContainer
@@ -13,12 +15,14 @@ export default function App() {
         },
       }}
     >
-      <WatchListProvider>
-        <View style={styles.container}>
-          <Navigation />
-          <StatusBar style="light" />
-        </View>
-      </WatchListProvider>
+      <RecoilRoot>
+        <WatchListProvider>
+          <View style={styles.container}>
+            <Navigation />
+            <StatusBar style="light" />
+          </View>
+        </WatchListProvider>
+      </RecoilRoot>
     </NavigationContainer>
   );
 }
