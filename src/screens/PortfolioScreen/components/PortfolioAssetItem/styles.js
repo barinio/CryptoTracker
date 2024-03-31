@@ -3,7 +3,8 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   coinContainer: {
     flexDirection: "row",
-    padding: 15
+    padding: 15,
+    backgroundColor: "#121212"
   },
   title: {
     fontSize: 16,

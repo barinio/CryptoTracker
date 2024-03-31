@@ -5,21 +5,21 @@ const styles = StyleSheet.create({
     padding: 15,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
+    alignItems: "center"
   },
   name: { color: "white", fontSize: 15 },
   currentPrice: {
     color: "white",
     fontSize: 30,
     fontWeight: "600",
-    letterSpacing: 1,
+    letterSpacing: 1
   },
   priceChange: { color: "white", fontSize: 17, fontWeight: "500" },
   priceChangeContainer: {
     paddingHorizontal: 3,
     paddingVertical: 8,
     borderRadius: 5,
-    flexDirection: "row",
+    flexDirection: "row"
   },
 
   input: {
@@ -30,8 +30,16 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     padding: 10,
     color: "white",
-    fontSize: 16,
+    fontSize: 16
   },
+  filterContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    backgroundColor: "#2b2b2b",
+    paddingVertical: 5,
+    borderRadius: 5,
+    marginVertical: 10
+  }
 });
 
 export default styles;

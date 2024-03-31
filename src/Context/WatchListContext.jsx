@@ -34,9 +34,7 @@ const WatchListProvider = ({ children }) => {
 
   const removeWatchListCoinId = async (coinId) => {
     try {
-      const newWatchList = watchListCoinIds.filter(
-        (coinIdValue) => coinIdValue !== coinId
-      );
+      const newWatchList = watchListCoinIds.filter((coinIdValue) => coinIdValue !== coinId);
       const jsonValue = JSON.stringify(newWatchList);
       await AsyncStorage.setItem("@watchlist_coins", jsonValue);
       setWatchListCoinIds(newWatchList);

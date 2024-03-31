@@ -1,18 +1,27 @@
 import { NavigationContainer } from "@react-navigation/native";
+import { RecoilRoot } from "recoil";
+
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import Navigation from "./src/navigation/Navigation";
 import WatchListProvider from "./src/Context/WatchListContext";
 
-import { RecoilRoot } from "recoil";
+import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
+const DroidSans = require("./assets/fonts/DroidSans.ttf");
 
 export default function App() {
+  let [fontsLoaded, fontError] = useFonts({ Inter_900Black, DroidSans });
+
+  if (!fontsLoaded && !fontError) {
+    return <ActivityIndicator size="large" />;
+  }
+
   return (
     <NavigationContainer
       theme={{
         colors: {
-          background: "#121212",
-        },
+          background: "#121212"
+        }
       }}
     >
       <RecoilRoot>
@@ -31,6 +40,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#121212",
-    paddingTop: 50,
-  },
+    paddingTop: 50
+  }
 });

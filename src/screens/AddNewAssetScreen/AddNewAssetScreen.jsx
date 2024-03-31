@@ -1,13 +1,17 @@
+import { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useRecoilState } from "recoil";
+
+import uuid from "react-native-uuid";
+
 import { Pressable, Text, TextInput, View } from "react-native";
 import SearchableDropdown from "react-native-searchable-dropdown";
 
-import styles from "./styles";
-import { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import { useRecoilState } from "recoil";
 import { allPortfolioBoughtAssetsInStorage } from "../../atoms/PortfolioAssets";
 import { getAllCoins, getDetailedCoinData } from "../../services/api";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import styles from "./styles";
 
 const AddNewAssetScreen = () => {
   const navigation = useNavigation();
@@ -52,6 +56,7 @@ const AddNewAssetScreen = () => {
   const onAddnewAsset = async () => {
     const newAsset = {
       id: selectedCoin.id,
+      unique_id: selectedCoin.id + uuid.v4(),
       name: selectedCoin.name,
       image: selectedCoin.image.small,
       ticker: selectedCoin.symbol.toUpperCase(),
@@ -106,7 +111,6 @@ const AddNewAssetScreen = () => {
               backgroundColor: isQuantityEntered() ? "#303030" : "#4169e1"
             }}
             onPress={onAddnewAsset}
-            // onPress={AsyncStorage.clear()}
             disabled={isQuantityEntered()}
           >
             <Text

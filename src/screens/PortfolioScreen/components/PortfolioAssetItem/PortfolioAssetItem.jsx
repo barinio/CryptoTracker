@@ -19,7 +19,7 @@ const PortfolioAssetItem = ({ assetItem }) => {
         <Text style={styles.ticker}>{ticker}</Text>
       </View>
 
-      <View style={{ marginLeft: "auto" }}>
+      <View style={{ marginLeft: "auto", alignItems: "flex-end" }}>
         <Text style={styles.title}>{currentPrice}</Text>
         <View style={{ flexDirection: "row" }}>
           <AntDesign
@@ -29,7 +29,7 @@ const PortfolioAssetItem = ({ assetItem }) => {
             style={{ alignSelf: "center", marginRight: 5 }}
           />
           <Text style={{ color: isChangePositive() ? "#16c784" : "#ea3943", fontWeight: "600" }}>
-            {priceChangePercentage.toFixed(2)}
+            {priceChangePercentage?.toFixed(2)}
           </Text>
         </View>
       </View>

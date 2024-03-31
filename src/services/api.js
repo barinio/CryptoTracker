@@ -15,10 +15,10 @@ export const getDetailedCoinData = async (coinId) => {
   }
 };
 
-export const getCoinMarketChart = async (coinId) => {
+export const getCoinMarketChart = async (coinId, selectedRange) => {
   try {
     const response = await instance.get(
-      `coins/${coinId}/market_chart?vs_currency=usd&days=1&interval=daily`
+      `coins/${coinId}/market_chart?vs_currency=usd&days=${selectedRange}&interval=daily`
     );
     return response.data;
   } catch (e) {

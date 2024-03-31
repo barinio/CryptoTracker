@@ -1,11 +1,16 @@
+import { useEffect, useState } from "react";
+import { useRoute } from "@react-navigation/native";
+
 import { ActivityIndicator, Text, TextInput, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
 import CoinDetailedHeader from "./components/CoinDetailedHeader/CoinDetailedHeader";
-import styles from "./styles";
-import { useRoute } from "@react-navigation/native";
+import FilterComponent from "./components/FilterComponent/FilterComponent";
+import { fitlerDaysData } from "./components/FilterComponent/filterDays";
+
 import { getCoinMarketChart, getDetailedCoinData } from "../../services/api";
-import { useEffect, useState } from "react";
+
+import styles from "./styles";
 
 const CoinDetailedScreen = () => {
   const [coin, setCoin] = useState(null);
@@ -17,18 +22,25 @@ const CoinDetailedScreen = () => {
   const [loading, setLoading] = useState(false);
   const [coinValue, setCoinValue] = useState("1");
   const [usdValue, setUsdValue] = useState("");
+  const [selectedRange, setSelectedRange] = useState("1");
 
   const fetchCoinData = async () => {
     setLoading(true);
     const fetchedCoinData = await getDetailedCoinData(coinId);
-    const fetchedCoinMarketData = await getCoinMarketChart(coinId);
+    const fetchedCoinMarketData = await getCoinMarketChart(coinId, selectedRange);
     setCoin(fetchedCoinData);
     setCoinMarketData(fetchedCoinMarketData);
     setLoading(false);
   };
 
+  const fetchMarketCoinData = async (selectedRangeValue) => {
+    const fetchedCoinMarketData = await getCoinMarketChart(coinId, selectedRangeValue);
+    setCoinMarketData(fetchedCoinMarketData);
+  };
+
   useEffect(() => {
     fetchCoinData();
+    fetchMarketCoinData();
   }, []);
 
   if (loading || !coin || !coinMarketData) {
@@ -40,23 +52,24 @@ const CoinDetailedScreen = () => {
     image: { small },
     name,
     symbol,
-    market_data: {
-      market_cap_rank,
-      current_price,
-      price_change_percentage_24h,
-    },
+    market_data: { market_cap_rank, current_price, price_change_percentage_24h }
   } = coin;
 
-  const percentageColor =
-    price_change_percentage_24h < 0 ? "#ea3943" : "#16c784" || "white";
+  const percentageColor = price_change_percentage_24h < 0 ? "#ea3943" : "#16c784" || "white";
 
-  // const formatCurrency = (value) => {
-  //   "worklet";
-  //   if (value === "") {
-  //     return `$${current_price.usd.toFixed(2)}`;
-  //   }
-  //   return `$${parseFloat(value).toFixed(2)}`;
-  // };
+  const formatCurrency = (value) => {
+    "worklet";
+    if (value === "") {
+      if (current_price.uds < 1) {
+        return `$${current_price.usd}`;
+      }
+      return `$${current_price.usd.toFixed(2)}`;
+    }
+    if (current_price.uds < 1) {
+      return `$${parseFloat(value)}`;
+    }
+    return `$${parseFloat(value).toFixed(2)}`;
+  };
 
   const changeCoinValue = (value) => {
     setCoinValue(value);
@@ -67,6 +80,11 @@ const CoinDetailedScreen = () => {
     setUsdValue(value);
     const floatValue = parseFloat(value.replace(",", ".")) || 0;
     setCoinValue((floatValue / current_price.usd).toString());
+  };
+
+  const onSelectedRangeChange = (selectedRangeValue) => {
+    setSelectedRange(selectedRangeValue);
+    fetchMarketCoinData(selectedRangeValue);
   };
 
   return (
@@ -85,7 +103,7 @@ const CoinDetailedScreen = () => {
         <View
           style={{
             ...styles.priceChangeContainer,
-            backgroundColor: percentageColor,
+            backgroundColor: percentageColor
           }}
         >
           <AntDesign
@@ -94,16 +112,25 @@ const CoinDetailedScreen = () => {
             color="white"
             style={{ alignSelf: "center", marginRight: 5 }}
           />
-          <Text style={styles.priceChange}>
-            {price_change_percentage_24h?.toFixed(2)}%
-          </Text>
+          <Text style={styles.priceChange}>{price_change_percentage_24h?.toFixed(2)}%</Text>
         </View>
       </View>
+
+      <View style={styles.filterContainer}>
+        {fitlerDaysData.map(({ filterDay, filterText }) => (
+          <FilterComponent
+            filterDay={filterDay}
+            filterText={filterText}
+            selectedRange={selectedRange}
+            setSelectedRange={onSelectedRangeChange}
+            key={filterText}
+          />
+        ))}
+      </View>
+
       <View style={{ flexDirection: "row" }}>
         <View style={{ flex: 1, flexDirection: "row" }}>
-          <Text style={{ color: "white", alignSelf: "center" }}>
-            {symbol.toUpperCase()}
-          </Text>
+          <Text style={{ color: "white", alignSelf: "center" }}>{symbol.toUpperCase()}</Text>
           <TextInput
             style={styles.input}
             value={coinValue}
