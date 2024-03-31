@@ -53,6 +53,15 @@ export const getAllCoins = async () => {
     const response = await instance.get(`coins/list?include_platform=false`);
     return response.data;
   } catch (e) {
-    console.log("getWatchListedCoins", e);
+    console.log("getAllCoins", e);
+  }
+};
+
+export const getCandleChartData = async (coinId, days = 1) => {
+  try {
+    const response = await instance.get(`coins/${coinId}/ohlc?vs_currency=usd&days=${days}`);
+    return response.data;
+  } catch (e) {
+    console.log("getCandleChartData", e);
   }
 };

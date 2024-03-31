@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 
 import uuid from "react-native-uuid";
 
-import { Pressable, Text, TextInput, View } from "react-native";
+import { KeyboardAvoidingView, Platform, Pressable, Text, TextInput, View } from "react-native";
 import SearchableDropdown from "react-native-searchable-dropdown";
 
 import { allPortfolioBoughtAssetsInStorage } from "../../atoms/PortfolioAssets";
@@ -72,7 +72,11 @@ const AddNewAssetScreen = () => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      keyboardVerticalOffset={80}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <SearchableDropdown
         items={allCoins}
         onItemSelect={(item) => setSelectedCoinId(item.id)}
@@ -124,7 +128,7 @@ const AddNewAssetScreen = () => {
           </Pressable>
         </>
       )}
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

@@ -35,7 +35,10 @@ const HomeScreen = () => {
 
   return (
     <View>
-      <Text style={{ ...styles.title, fontFamily: "DroidSans" }}>CryptoAssets</Text>
+      <View style={styles.homeHeader}>
+        <Text style={{ ...styles.title, fontFamily: "DroidSans" }}>CryptoAssets</Text>
+        <Text style={styles.description}>Powered by CoinGecko</Text>
+      </View>
       <FlatList
         data={coins}
         renderItem={({ item }) => <CoinItem marketCoin={item} />}

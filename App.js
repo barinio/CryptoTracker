@@ -1,5 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { RecoilRoot } from "recoil";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 import { StatusBar } from "expo-status-bar";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
@@ -7,6 +8,7 @@ import Navigation from "./src/navigation/Navigation";
 import WatchListProvider from "./src/Context/WatchListContext";
 
 import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
+import Animated from "react-native-reanimated";
 const DroidSans = require("./assets/fonts/DroidSans.ttf");
 
 export default function App() {
@@ -26,10 +28,12 @@ export default function App() {
     >
       <RecoilRoot>
         <WatchListProvider>
-          <View style={styles.container}>
-            <Navigation />
-            <StatusBar style="light" />
-          </View>
+          <GestureHandlerRootView>
+            <Animated.View style={styles.container}>
+              <Navigation />
+              <StatusBar style="light" />
+            </Animated.View>
+          </GestureHandlerRootView>
         </WatchListProvider>
       </RecoilRoot>
     </NavigationContainer>

@@ -7,7 +7,9 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     paddingHorizontal: 20,
     paddingBottom: 5
-  }
+  },
+  homeHeader: { flexDirection: "row", justifyContent: "space-between", alignItems: "center" },
+  description: { color: "lightgrey", fontSize: 12, paddingHorizontal: 10 }
 });
 
 export default styles;
